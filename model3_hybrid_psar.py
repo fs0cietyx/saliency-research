@@ -308,10 +308,16 @@ def evaluate_standardized(model):
     evaluator = Evaluator()
 
     with torch.no_grad():
-        for img, mask in tqdm(test_dl):
+        import cv2
+        os.makedirs('out/preds_model3', exist_ok=True)
+        for i, (img, mask) in enumerate(tqdm(test_dl)):
             img, mask = img.to(CONFIG['DEVICE']), mask.to(CONFIG['DEVICE'])
             pred = model(img)
             evaluator.update(pred, mask)
+            
+            pred_np = torch.sigmoid(pred[0]).squeeze().cpu().numpy()
+            img_name = test_ds.ids[i] + ".png"
+            cv2.imwrite(os.path.join('out/preds_model3', img_name), (pred_np * 255).astype(np.uint8))
 
     metrics = evaluator.get_results()
    
