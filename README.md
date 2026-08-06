@@ -1,0 +1,26 @@
+# Salient Object Detection (SOD) Research
+
+This repository contains the codebase for our research on advanced Salient Object Detection methodologies. We are exploring two distinct paradigms: complex loss formulations vs. progressive curriculum learning.
+
+## Models
+
+### 1. Model 1: The "Smart Loss" Approach (`saliency_detection.py`)
+- **Architecture:** ResNet50-UNet
+- **Innovation:** Utilizes a custom Hybrid Loss function combining Binary Cross Entropy (BCE), Structural Similarity Index (SSIM), and Intersection over Union (IoU).
+- **Features:** Generates predictive uncertainty heatmaps (via entropy) for Explainable AI (XAI) analysis.
+
+### 2. Model 2: The "Smart Training" Approach (`psar_saliency.py`)
+- **Architecture:** Minimalist Feature Pyramid Network (FPN) with a ResNet50 backbone.
+- **Innovation:** Progressive Structure-Aware Refinement (PSAR). Uses Curriculum Learning to dynamically scale the input resolution (224px → 288px → 352px) over the training epochs.
+- **Features:** Bootstrapped 95% Confidence Intervals for MAE and Adaptive F-measure validation.
+
+## Progress
+- [x] Model 1 architecture and Hybrid Loss implemented.
+- [x] Model 1 successfully trained on DUTS dataset (Colab T4 GPU). Final Loss: 1.441.
+- [x] Model 2 architecture and Curriculum Learning implemented.
+- [x] Model 2 successfully trained and evaluated. (MAE: ~0.0349, beating F3Net baseline).
+
+## Running the Code
+It is highly recommended to run these scripts in Google Colab with a GPU enabled.
+1. Run `saliency_detection.py` to automatically download the DUTS dataset and train Model 1.
+2. Run `psar_saliency.py` to train Model 2 on the downloaded dataset.

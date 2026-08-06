@@ -1,0 +1,20 @@
+# Ignore datasets and heavy output files
+data/
+out/
+output/
+preds/
+uncertainty/
+
+# Ignore model weights
+*.pth
+*.pt
+
+# Ignore large zip files
+*.zip
+*.tar
+*.gz
+
+# Ignore python cache
+__pycache__/
+*.pyc
+.ipynb_checkpoints/
