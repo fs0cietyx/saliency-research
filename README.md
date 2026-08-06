@@ -47,7 +47,7 @@ The Hybrid Loss successfully generates highly accurate binary masks. Furthermore
 
 | Original Image | Predicted Saliency Mask | Predictive Uncertainty Map |
 |:---:|:---:|:---:|
-| ![Original Image](assets/sample_original.jpg) | ![Prediction](assets/sample_prediction.png) | ![Uncertainty](assets/sample_uncertainty.png) |
+| *(Hidden for demo)* | ![Prediction](assets/sample_prediction.png) | ![Uncertainty](assets/sample_uncertainty.png) |
 
 ---
 

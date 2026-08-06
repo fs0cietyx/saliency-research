@@ -92,6 +92,37 @@ class HybridLoss(nn.Module):
 # ==========================================
 # 3. DATASET (From Model 2)
 # ==========================================
+def setup_environment():
+    print(" Setting up Environment...")
+    os.makedirs('out', exist_ok=True)
+    os.makedirs('data', exist_ok=True)
+
+    if not os.path.exists('data/DUTS-TR'):
+        print(" Downloading DUTS Dataset...")
+        os.system('curl -sL http://saliencydetection.net/duts/download/DUTS-TR.zip -o data/DUTS-TR.zip')
+        os.system('curl -sL http://saliencydetection.net/duts/download/DUTS-TE.zip -o data/DUTS-TE.zip')
+        print(" Extracting Data...")
+        os.system('unzip -q data/DUTS-TR.zip -d data/')
+        os.system('unzip -q data/DUTS-TE.zip -d data/')
+        
+        tr_root = 'data/DUTS-TR'
+        te_root = 'data/DUTS-TE'
+        
+        if os.path.exists(f'{tr_root}/DUTS-TR-Image'):
+            os.system(f'mv {tr_root}/DUTS-TR-Image/* {tr_root}/image/ 2>/dev/null || mkdir -p {tr_root}/image && mv {tr_root}/DUTS-TR-Image/* {tr_root}/image/')
+            os.system(f'mv {tr_root}/DUTS-TR-Mask/* {tr_root}/mask/ 2>/dev/null || mkdir -p {tr_root}/mask && mv {tr_root}/DUTS-TR-Mask/* {tr_root}/mask/')
+        
+        if os.path.exists(f'{te_root}/DUTS-TE-Image'):
+            os.system(f'mv {te_root}/DUTS-TE-Image/* {te_root}/image/ 2>/dev/null || mkdir -p {te_root}/image && mv {te_root}/DUTS-TE-Image/* {te_root}/image/')
+            os.system(f'mv {te_root}/DUTS-TE-Mask/* {te_root}/mask/ 2>/dev/null || mkdir -p {te_root}/mask && mv {te_root}/DUTS-TE-Mask/* {te_root}/mask/')
+
+        for path in [tr_root, te_root]:
+            if not os.path.exists(os.path.join(path, 'image')): continue
+            imgs = [f.split('.')[0] for f in os.listdir(os.path.join(path, 'image')) if f.endswith('.jpg')]
+            with open(os.path.join(path, 'train.txt' if 'TR' in path else 'test.txt'), 'w') as f:
+                f.write('\n'.join(imgs))
+    print(" Environment Ready.")
+
 class SODDataset(Dataset):
     def __init__(self, img_dir, mask_dir, is_train=True, resolution=352):
         self.img_dir = img_dir
@@ -331,6 +362,7 @@ def evaluate_standardized(model):
     print("="*50)
 
 if __name__ == "__main__":
+    setup_environment()
     if os.path.exists("best_model3.pth"):
         print("Found existing trained Model 3. Loading for evaluation...")
         model = SimpleRefineNet().to(CONFIG['DEVICE'])
