@@ -55,13 +55,29 @@ When comparing Model 3 (Hybrid Loss + Curriculum Learning) to the heavy F3Net ba
 
 ---
 
-## 👁️ Qualitative Results (Model 1)
+## 📈 Graphical Analysis (ROC Curves)
 
-The Hybrid Loss successfully generates highly accurate binary masks. Furthermore, the generated uncertainty maps prove the model isolates its mathematical doubt precisely to the fine boundaries of complex objects.
+The Receiver Operating Characteristic (ROC) curve below visually proves the superior True Positive Rate (TPR) and minimal False Positive Rate (FPR) achieved by our proposed Model 3 (Hybrid Loss + PSAR) across 255 confidence thresholds.
 
-| Original Image | Predicted Saliency Mask | Predictive Uncertainty Map |
-|:---:|:---:|:---:|
-| *(Hidden for demo)* | ![Prediction](assets/sample_prediction.png) | ![Uncertainty](assets/sample_uncertainty.png) |
+<div align="center">
+  <img src="assets/ROC_Comparison_Curves.png" alt="ROC Curve Comparison" width="700">
+</div>
+
+---
+
+## 📁 Repository Structure
+
+```text
+Saliency-Research/
+│
+├── saliency_detection.py      # Model 1: ResNet-UNet + Hybrid Loss (BCE+SSIM+IoU)
+├── psar_saliency.py           # Model 2: Minimalist FPN + Progressive Curriculum
+├── model3_hybrid_psar.py      # Model 3: SOTA Fusion (Curriculum + Hybrid Loss)
+├── paper_evaluation_suite.py  # Automated metric evaluation (MAE, AdpF, S, E, ROC)
+├── requirements.txt           # Python dependencies
+├── README.md                  # Project Documentation
+└── assets/                    # Graphical plots and visuals
+```
 
 ---
 
