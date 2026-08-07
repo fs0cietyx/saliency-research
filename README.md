@@ -44,9 +44,14 @@ Evaluated on the standard DUTS-TE dataset (5,019 images). Our model effectively 
 ### ROC Analysis
 The Receiver Operating Characteristic (ROC) curve below visually proves the superior True Positive Rate (TPR) and minimal False Positive Rate (FPR) convergence achieved by our proposed model across 255 confidence thresholds.
 
-<div align="center">
-  <img src="assets/ROC_Comparison_Curves.png" alt="ROC Curve Comparison" width="600">
-</div>
+<p align="center">
+  <img src="assets/ROC_Comparison_Curves.png" alt="Ours (Model 3) ROC Curve" width="48%">
+  &nbsp;
+  <img src="assets/F3Net_ROC.png" alt="F3Net (Baseline) ROC Curve" width="48%">
+</p>
+<p align="center">
+  <em>Left: Ours (Model 3) | Right: F3Net (Baseline)</em>
+</p>
 
 ---
 
