@@ -349,6 +349,16 @@ def evaluate_standardized(model):
             pred_np = torch.sigmoid(pred[0]).squeeze().cpu().numpy()
             img_name = test_ds.ids[i] + ".png"
             cv2.imwrite(os.path.join('out/preds_model3', img_name), (pred_np * 255).astype(np.uint8))
+            
+            # Explainable AI: Shannon Entropy Uncertainty Heatmaps
+            os.makedirs('out/uncertainty_model3', exist_ok=True)
+            # Calculate pixel-wise uncertainty: U = - (p * log2(p) + (1-p) * log2(1-p))
+            uncertainty = - (pred_np * np.log2(pred_np + 1e-7) + (1 - pred_np) * np.log2(1 - pred_np + 1e-7))
+            
+            # Normalize uncertainty map to 0-255 for visualization
+            uncertainty_vis = (uncertainty / uncertainty.max() * 255).astype(np.uint8)
+            heatmap = cv2.applyColorMap(uncertainty_vis, cv2.COLORMAP_JET)
+            cv2.imwrite(os.path.join('out/uncertainty_model3', img_name), heatmap)
 
     metrics = evaluator.get_results()
    
