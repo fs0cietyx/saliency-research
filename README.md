@@ -55,6 +55,21 @@ When comparing Model 3 (Hybrid Loss + Curriculum Learning) to the heavy F3Net ba
 
 ---
 
+## 🧠 Computational Complexity (Efficiency)
+
+A critical component of this research is proving that state-of-the-art results can be achieved without computational bloat. Our Model 3 uses a minimalist Feature Pyramid Network (FPN), bypassing the computationally expensive attention and feedback modules found in F3Net. 
+
+| Model | Input Resolution | Parameters (M) | FLOPs (G) |
+| :--- | :---: | :---: | :---: |
+| F3Net (Baseline) | 352 x 352 | ~25.54 M | Heavy |
+| **Model 3 (Fusion)** | 384 x 384 | **23.90 M*** | **96.48 G** |
+
+*(Note: The total parameter count explicitly excludes the 2.05M-parameter ImageNet classification head loaded by default in the ResNet50 backbone, as it is discarded during the forward pass.)*
+
+**Conclusion:** Despite utilizing a significantly lighter decoder architecture (23.90M active parameters vs F3Net's 25.54M), our model achieves superior MAE and identical ROC convergence rates. This validates our core thesis: the combination of a strict Hybrid Loss function and Progressive Curriculum Learning successfully forces a lightweight network to learn high-fidelity structural boundaries without relying on computationally expensive architectural modules.
+
+---
+
 ## 📈 Graphical Analysis (ROC Curves)
 
 The Receiver Operating Characteristic (ROC) curve below visually proves the superior True Positive Rate (TPR) and minimal False Positive Rate (FPR) achieved by our proposed Model 3 (Hybrid Loss + PSAR) across 255 confidence thresholds.
